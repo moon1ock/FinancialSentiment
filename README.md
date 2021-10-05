@@ -1,1 +1,4 @@
-<h1><center>Financial Sentiment Based on News</center></h1>
+
+<p align="center">
+  <h1>Financial Sentiment Based on News</h1>
+</p>
