@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Summary</th>
+        <th>Published</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in article_data %}
+      <tr>
+        {% if i['polarity'] < 0  %}
+            <td> <img src="{{ i['urlToImage'] }}" width="50" height=auto></td>
+
+            <td style = "color: red">{{ i['title'] }}</td>
+            <td style = "color: red">{{ i['description'] }}</td>
+            <td style = "color: red">{{ i['publishedAt'] }}</td>
+
+        {% endif %}
+        {% if i['polarity'] > 0  %}
+            <td> <img src="{{ i['urlToImage'] }}" width="50" height=auto></td>
+
+
+            <td style = "color: green">{{ i['title'] }}</td>
+            <td style = "color: green">{{ i['description'] }}</td>
+            <td style = "color: green">{{ i['publishedAt'] }}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
