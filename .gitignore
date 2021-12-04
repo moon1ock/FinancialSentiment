@@ -1,5 +1,6 @@
 /env
 fin_sentiment_front/node_modules
+fin_sentiment_front/.DS_Store
 fin_sentiment_front/.pnp
 fin_sentiment_front/.pnp.js
 fin_sentiment_front/coverage
@@ -11,3 +12,5 @@ fin_sentiment_front.env.production.local
 fin_sentiment_frontnpm-debug.log*
 fin_sentiment_frontyarn-debug.log*
 fin_sentiment_frontyarn-error.log*
+.vscode
+.DS_Store
