@@ -106,7 +106,7 @@ def search(query):
 
 	if q in cache:
 		return render_template("main_Google.html", article_data=cache[q])
-	url = "https://news.google.com/rss/search?q=intitle:{}+after:2021-11-01&ceid=US:en&hl=en-US&gl=US".format(q)
+	url = "https://news.google.com/rss/search?q=intitle:{}%20stock+after:2021-11-01&ceid=US:en&hl=en-US&gl=US".format(q)
 
 	resp = requests.get(url)
 
