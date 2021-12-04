@@ -1,6 +1,7 @@
 # create certificate ln -s /etc/ssl/* /Library/Frameworks/Python.framework/Versions/3.9/etc/openssl 
 
 from flask import Flask, render_template,request, redirect, url_for
+from flask_cors import CORS
 import random
 import time
 from datetime import datetime, timezone, timedelta
@@ -26,6 +27,7 @@ import metadata_parser
 from textblob import TextBlob
 
 app = Flask(__name__)
+CORS(app)
 cache = {}
 
 #### FORM for QUERY #####
@@ -90,7 +92,34 @@ class WebScraper(object):
 					continue
 
 
+def scrape_data(query):
+	form = QueryForm(request.form)
+	q = "-1"
+	if request.method == 'POST' and form.validate():
+		q = form.query.data
+		return redirect(url_for('search', query = q))
 
+	q = query
+
+	url = "https://news.google.com/rss/search?q=intitle:{}+after:2021-11-01&ceid=US:en&hl=en-US&gl=US".format(q)
+
+	resp = requests.get(url)
+
+	soup = BeautifulSoup(resp.content, features="xml")
+	items = soup.findAll('item')
+
+	links_and_times = {link.link.text: link.pubDate.text for link in items }
+
+	urls = [link.link.text for link in items ]
+
+	scraper = WebScraper(urls = urls[:]) # HOW many URLs would you want?
+	article_data  = list(a for a in scraper.master_dict.values() if a)
+
+	for story in article_data:
+		if story['url'] in links_and_times:
+			story['pubDate'] = links_and_times[story['url']]
+
+	return article_data
 
 @app.route('/search/<query>', methods=['GET', 'POST'])
 def search(query):
@@ -102,7 +131,6 @@ def search(query):
 
 
 	q = query
-	print(q)
 
 	if q in cache:
 		return render_template("main_Google.html", article_data=cache[q])
@@ -127,6 +155,11 @@ def search(query):
 	cache[q] = article_data
 	return render_template("main_Google.html", article_data=cache[q])
 
+@app.route('/api/<query>', methods=['GET'])
+def api(query):
+	if not query in cache:
+		cache[query] = scrape_data(query)
+	return {'data':cache[query]}
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
