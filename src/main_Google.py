@@ -4,6 +4,7 @@ from flask import Flask, render_template,request, redirect, url_for
 from flask_cors import CORS
 import random
 import time
+from statistics import mean
 from datetime import datetime, timezone, timedelta
 import pandas as pd
 import numpy as np
@@ -101,7 +102,7 @@ def scrape_data(query):
 
 	q = query
 
-	url = "https://news.google.com/rss/search?q=intitle:{}+after:2021-11-01&ceid=US:en&hl=en-US&gl=US".format(q)
+	url = "https://news.google.com/rss/search?q=intitle:{}%20stock+after:2021-11-01&ceid=US:en&hl=en-US&gl=US".format(q)
 
 	resp = requests.get(url)
 
@@ -159,7 +160,8 @@ def search(query):
 def api(query):
 	if not query in cache:
 		cache[query] = scrape_data(query)
-	return {'data':cache[query]}
+	mean_sentiment = mean([article['sentiment'] for article in cache[query]]) if len(cache[query])>0 else 0
+	return {'data':cache[query], 'sentiment':mean_sentiment}
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
