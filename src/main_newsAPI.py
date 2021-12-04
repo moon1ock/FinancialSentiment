@@ -3,7 +3,7 @@ import random
 import time
 from datetime import datetime, timezone, timedelta
 import pandas as pd
-import numpy as np
+import numpy
 import requests
 from bs4 import BeautifulSoup
 import html5lib

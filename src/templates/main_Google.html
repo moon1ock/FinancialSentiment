@@ -6,6 +6,8 @@
       <tr>
         <th>Image</th>
         <th>Title</th>
+        <th>Publisher</th>
+        
         <th>Summary</th>
         <th>Published</th>
       </tr>
@@ -16,13 +18,16 @@
         {% if i['sentiment'] < 0  %}
             <td> <img src="{{ i['image'] }}" width="50" height=auto></td>
             <td style = "color: red">{{ i['title'] }}</td>
+            <td style = "color: red">{{ i['site_name'] }}</td>
             <td style = "color: red">{{ i['description'] }}</td>
             <td style = "color: red">{{ i['pubDate'] }}</td>
 
+
         {% endif %}
-        {% if i['sentiment'] > 0  %}
+        {% if i['sentiment'] >= 0  %}
             <td> <img src="{{ i['image'] }}" width="50" height=auto></td>
             <td style = "color: green">{{ i['title'] }}</td>
+            <td style = "color: green">{{ i['site_name'] }}</td>
             <td style = "color: green">{{ i['description'] }}</td>
             <td style = "color: green">{{ i['pubDate'] }}</td>
         {% endif %}
