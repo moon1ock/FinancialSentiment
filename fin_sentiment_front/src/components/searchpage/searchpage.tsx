@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import getScrapedData from '../../adapters/getScrapedData'
 import SearchCards from './searchcards'
 import SearchBar from '../searchbar/searchbar'
+import CardLoader from './cardloader';
 
 export interface Article{
     description: string
@@ -16,6 +17,7 @@ export interface Article{
 
 export interface ArticleList{
     data: Article[]
+    sentiment: number
 }
 
 const SearchPage = () =>{
@@ -26,7 +28,7 @@ const SearchPage = () =>{
 
     //get search state from current url
     useEffect(()=>{
-        const query = location.search.split('=')[1]
+        const query = location.search?.split('=')[1]?.replace('/','')
         if(!query)
             navigate("../", { replace: true });
         setSearch(query)
@@ -43,7 +45,7 @@ const SearchPage = () =>{
             <SearchBar initial={search}/>
             {data.data?
                 <SearchCards {...data}/>
-                :"Loading..."
+                : Array.apply(null, Array(5)).map((val,index)=>{return <CardLoader key={index}/>})
             }
         </div>
     )

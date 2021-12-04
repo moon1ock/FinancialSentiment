@@ -4,7 +4,7 @@ import searchicon from '../../images/search.png'
 
 const SearchBar = ({initial}:{initial:string}) =>{
     const [search, setSearch] = useState('');
-    useEffect(()=>{setSearch(initial)},[initial])
+    useEffect(()=>{setSearch(initial?.replace('%20',' '))},[initial])
     let navigate = useNavigate();
     const changeHandler = (event:React.FormEvent<HTMLInputElement>) =>{
         setSearch(event.currentTarget.value)
