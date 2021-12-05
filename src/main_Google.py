@@ -15,10 +15,13 @@ import lxml
 import metadata_parser
 from textblob import TextBlob
 import re
+import matplotlib.pyplot as plt
+from datetime import datetime
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
-
+from urllib.parse import urlparse
+import yfinance as yf
 import asyncio
 import time
 import aiohttp
@@ -30,6 +33,11 @@ from textblob import TextBlob
 app = Flask(__name__)
 CORS(app)
 cache = {}
+symbols = {}
+companyinfo = {}
+pricedict = {}
+
+headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36' } 
 
 #### FORM for QUERY #####
 
@@ -122,6 +130,20 @@ def scrape_data(query):
 
 	return article_data
 
+def get_symbol(query):
+    url = f'https://www.google.com/search?q=yahoo+finance+{query}'
+    resp = requests.get(url, headers=headers)
+    bs = BeautifulSoup(resp.text, "lxml")
+    results = bs.find('div',id='search')
+    if not results:
+    	return ''
+    firsturl = results.find('a')['href']
+    parsed_url = urlparse(firsturl)
+    if not parsed_url.netloc == 'finance.yahoo.com':
+        return ''
+    return firsturl.split('/')[-2] or firsturl.split('/')[-1]
+
+
 @app.route('/search/<query>', methods=['GET', 'POST'])
 def search(query):
 	form = QueryForm(request.form)
@@ -158,10 +180,37 @@ def search(query):
 
 @app.route('/api/<query>', methods=['GET'])
 def api(query):
+	if not query in symbols:
+	    symbols[query] = get_symbol(query)
+	symbol = symbols[query]
+	if not symbol in companyinfo:
+	   ticker = yf.Ticker(symbol)
+	   companyinfo[symbol] = (
+	    ticker.info['currentPrice'] if 'currentPrice' in ticker.info else -1,
+	    ticker.info['logo_url']
+	    )
+	currprice, logo_url = companyinfo[symbol]
 	if not query in cache:
 		cache[query] = scrape_data(query)
+	if len(cache[query])==0:
+		 return {'data':[], 'sentiment':0, 'symbol':'', 'price':-1, 'logo_url':'', 'prediction':-1,'pricematrix':[]}
 	mean_sentiment = mean([article['sentiment'] for article in cache[query]]) if len(cache[query])>0 else 0
-	return {'data':cache[query], 'sentiment':mean_sentiment}
+	prediction = currprice+currprice*mean_sentiment
+	if not symbol in pricedict:
+		df = yf.download(symbol, start='2021-09-01', progress=False)
+		pricelist = df['Close'].tolist()
+		timelist = [int(datetime.timestamp(time)) for time in df.index]
+		pricematrix = [[time,price] for time,price in zip(timelist, pricelist)]
+		pricedict[symbol] = pricematrix
+	return {
+		'data':cache[query], 
+		'sentiment':mean_sentiment, 
+		'symbol':symbol, 
+		'price':currprice, 
+		'logo_url':logo_url, 
+		'prediction':prediction,
+		'pricematrix':pricedict[symbol]
+	}
 
 @app.route('/', methods=['GET', 'POST'])
 def home():

@@ -18,6 +18,11 @@ export interface Article{
 export interface ArticleList{
     data: Article[]
     sentiment: number
+    price: number
+    logo_url: string
+    symbol: string
+    prediction: number
+    pricematrix: number[][]
 }
 
 const SearchPage = () =>{
@@ -42,10 +47,20 @@ const SearchPage = () =>{
     },[search])
     return(
         <div className="p-3">
-            <SearchBar initial={search}/>
+            <div className="flex items-center md:mr-12">
+                <a href="/">
+                    <h1 className="hidden shadow-md md:block text-2xl ml-2 border border-purple-500 rounded-xl p-1">
+                        Senti<span className="text-purple-500">Predict</span>
+                    </h1>
+                </a>
+                <SearchBar initial={search}/>
+            </div>
             {data.data?
                 <SearchCards {...data}/>
-                : Array.apply(null, Array(5)).map((val,index)=>{return <CardLoader key={index}/>})
+                : 
+                <div className="md:flex md:flex-wrap md:justify-around">
+                    {Array.apply(null, Array(10)).map((val,index)=>{return <CardLoader key={index}/>})}
+                </div>
             }
         </div>
     )
