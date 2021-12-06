@@ -15,7 +15,6 @@ import lxml
 import metadata_parser
 from textblob import TextBlob
 import re
-import matplotlib.pyplot as plt
 from datetime import datetime
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
@@ -197,11 +196,14 @@ def api(query):
 	mean_sentiment = mean([article['sentiment'] for article in cache[query]]) if len(cache[query])>0 else 0
 	prediction = currprice+currprice*mean_sentiment
 	if not symbol in pricedict:
-		df = yf.download(symbol, start='2021-09-01', progress=False)
-		pricelist = df['Close'].tolist()
-		timelist = [int(datetime.timestamp(time)) for time in df.index]
-		pricematrix = [[time,price] for time,price in zip(timelist, pricelist)]
-		pricedict[symbol] = pricematrix
+		try:
+			df = yf.download(symbol, start='2021-09-01', progress=False)
+			pricelist = df['Close'].tolist()
+			timelist = [int(datetime.timestamp(time)) for time in df.index]
+			pricematrix = [[time,price] for time,price in zip(timelist, pricelist)]
+			pricedict[symbol] = pricematrix
+		except:
+			pricedict[symbol] = []
 	return {
 		'data':cache[query], 
 		'sentiment':mean_sentiment, 

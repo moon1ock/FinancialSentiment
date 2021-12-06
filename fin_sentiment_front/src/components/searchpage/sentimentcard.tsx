@@ -31,10 +31,15 @@ const SentimentCard = ({sentiment, logo_url, price, prediction, symbol, pricemat
                         null
                     }
                 </div>
-                <div className="ml-3 hidden md:block">
-                    <h1 className="text-center underline">3 Month History ({symbol})</h1>
-                    <TimeGraph pricematrix={pricematrix}/>
-                </div>
+                {
+                price!==-1
+                    ?
+                    <div className="ml-3 hidden md:block">
+                        <h1 className="text-center underline">3 Month History ({symbol})</h1>
+                        <TimeGraph pricematrix={pricematrix}/>
+                    </div>:null
+                }
+                
         </div>
     )
 }

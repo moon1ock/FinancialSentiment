@@ -6,11 +6,11 @@ const TimeGraph = (props) =>{
     const {pricematrix} = props;
     const [series, setSeries] = useState(null);
     useEffect(()=>{
-        const data = {
-            columns: ["time", "value"],
-            points: pricematrix
-        };
-        if(pricematrix){
+        if(pricematrix?.length>0){
+            const data = {
+                columns: ["time", "value"],
+                points: pricematrix
+            };
             setSeries(new TimeSeries(data))
         }
     },[pricematrix])
