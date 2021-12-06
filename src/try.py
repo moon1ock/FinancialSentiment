@@ -1,5 +1,4 @@
 from googlesearch import search
-from yahoo_finance import *
 import yfinance as yf
 import pandas as pd
 
