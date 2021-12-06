@@ -15,7 +15,6 @@ import lxml
 import metadata_parser
 from textblob import TextBlob
 import re
-import matplotlib.pyplot as plt
 from datetime import datetime
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
