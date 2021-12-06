@@ -16,6 +16,8 @@ import metadata_parser
 from textblob import TextBlob
 import re
 from datetime import datetime
+from googlesearch import search as gsearch
+
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
@@ -129,18 +131,29 @@ def scrape_data(query):
 
 	return article_data
 
-def get_symbol(query):
-    url = f'https://www.google.com/search?q=yahoo+finance+{query}'
-    resp = requests.get(url, headers=headers)
-    bs = BeautifulSoup(resp.text, "lxml")
-    results = bs.find('div',id='search')
-    if not results:
-    	return ''
-    firsturl = results.find('a')['href']
-    parsed_url = urlparse(firsturl)
-    if not parsed_url.netloc == 'finance.yahoo.com':
-        return ''
-    return firsturl.split('/')[-2] or firsturl.split('/')[-1]
+
+def name_convert(a):
+
+    searchval = 'yahoo finance '+a
+    link = []
+    #limits to the first link
+    for url in gsearch(searchval, tld='es', lang='es', stop=1):
+        link.append(url)
+
+    link = str(link[0])
+    link=link.split("/")
+
+    if link[-1]=='':
+        ticker=link[-2]
+    else:
+        x=link[-1].split('=')
+        ticker=x[-1]
+    try:
+    	long_name = yf.Ticker(ticker).info['longName']
+    except:
+    	return '', ''
+    return ticker, long_name
+
 
 
 @app.route('/search/<query>', methods=['GET', 'POST'])
@@ -180,8 +193,12 @@ def search(query):
 @app.route('/api/<query>', methods=['GET'])
 def api(query):
 	if not query in symbols:
-	    symbols[query] = get_symbol(query)
-	symbol = symbols[query]
+	    symbol, full_name = name_convert(query)
+	    company_name = full_name
+	    if not full_name:
+	    	full_name = query
+	    symbols[full_name] = symbol
+	symbol = symbols[full_name]
 	if not symbol in companyinfo:
 	   ticker = yf.Ticker(symbol)
 	   companyinfo[symbol] = (
@@ -189,11 +206,11 @@ def api(query):
 	    ticker.info['logo_url']
 	    )
 	currprice, logo_url = companyinfo[symbol]
-	if not query in cache:
-		cache[query] = scrape_data(query)
-	if len(cache[query])==0:
+	if not full_name in cache:
+		cache[full_name] = scrape_data(full_name)
+	if len(cache[full_name])==0:
 		 return {'data':[], 'sentiment':0, 'symbol':'', 'price':-1, 'logo_url':'', 'prediction':-1,'pricematrix':[]}
-	mean_sentiment = mean([article['sentiment'] for article in cache[query]]) if len(cache[query])>0 else 0
+	mean_sentiment = mean([article['sentiment'] for article in cache[full_name]]) if len(cache[full_name])>0 else 0
 	prediction = currprice+currprice*mean_sentiment
 	if not symbol in pricedict:
 		try:
@@ -205,13 +222,14 @@ def api(query):
 		except:
 			pricedict[symbol] = []
 	return {
-		'data':cache[query], 
+		'data':cache[full_name], 
 		'sentiment':mean_sentiment, 
 		'symbol':symbol, 
 		'price':currprice, 
 		'logo_url':logo_url, 
 		'prediction':prediction,
-		'pricematrix':pricedict[symbol]
+		'pricematrix':pricedict[symbol],
+		'company_name':company_name
 	}
 
 @app.route('/', methods=['GET', 'POST'])

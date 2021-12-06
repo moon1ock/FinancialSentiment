@@ -10,6 +10,7 @@ export interface SentimentData{
     prediction: number
     symbol: string
     pricematrix: number[][]
+    company_name:string
 }
 
 const SearchCards = (articles:ArticleList) =>{
@@ -22,7 +23,8 @@ const SearchCards = (articles:ArticleList) =>{
                 price:articles.price,
                 prediction:articles.prediction,
                 symbol:articles.symbol,
-                pricematrix:articles.pricematrix
+                pricematrix:articles.pricematrix,
+                company_name:articles.company_name
             }}/>
             :"No results"}
             <div className="md:flex md:flex-wrap md:justify-around">

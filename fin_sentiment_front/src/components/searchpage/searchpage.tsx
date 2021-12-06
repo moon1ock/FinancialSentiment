@@ -17,6 +17,7 @@ export interface Article{
 
 export interface ArticleList{
     data: Article[]
+    company_name: string
     sentiment: number
     price: number
     logo_url: string
