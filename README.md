@@ -34,4 +34,15 @@
 
 --------
 
+<h2> 
+  Using the Frontend
+</h2>
 
+<p>
+  The frontend of the project uses Node 14.17.5, TypeScript 4.5.2, React 17.0.2, and Tailwind 2.2.17, initialized with create-react-app
+  
+  Change you directory to fin_sentiment_front and run `npm install` to install dependencies
+  
+  To start, run `npm run start` and visit `localhost:3000` to see the landing page
+  Searches have the url `/search?query={query}`
+</p>
