@@ -3,6 +3,14 @@
   <a>Financial Sentiment Based on News</a>
 </h1>
 
+## ToD0:
+
+- [ ] get gifs from the website
+- [ ] describe core features
+- [ ] `bash` script for running both servers simulataneously 
+
+
+
 <h2>
   Project Organization
 </h2>
