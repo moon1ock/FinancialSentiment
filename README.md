@@ -3,10 +3,6 @@
   <a>Financial Sentiment Based on News</a>
 </h1>
 
-
-![demo](https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true)
-
-
 <img src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" width="1024"/>
 
 
