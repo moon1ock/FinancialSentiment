@@ -4,7 +4,7 @@
 </h1>
 
 <video controls loop>
-  <video src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" width="1024"/>
+  <img src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" width="1024"/>
 </video>
 
 ## Tutorial
