@@ -1,4 +1,4 @@
-# create certificate ln -s /etc/ssl/* /Library/Frameworks/Python.framework/Versions/3.9/etc/openssl 
+# create certificate ln -s /etc/ssl/* /Library/Frameworks/Python.framework/Versions/3.9/etc/openssl
 
 from flask import Flask, render_template,request, redirect, url_for
 from flask_cors import CORS
@@ -38,16 +38,15 @@ symbols = {}
 companyinfo = {}
 pricedict = {}
 
-headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36' } 
+headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36' }
 
-#### FORM for QUERY #####
-
+#### FORM for QUERY for server side Front end #####
 class QueryForm(Form):
 	 query = StringField('Company', [validators.Length(min=3, max=30)])
 
 
 #### WEB SCRAPER OBJECT ####
-
+`
 class WebScraper(object):
 	'''
 	WebScraper class
@@ -55,7 +54,7 @@ class WebScraper(object):
 	'''
 	def __init__(self, urls):
 		self.urls = urls
-		self.all_data  = []
+		self.all_data ` = []
 		self.master_dict = {}
 		asyncio.run(self.main())
 
@@ -137,32 +136,36 @@ def scrape_data(query):
 	return article_data
 
 
+
 def name_convert(a):
-    '''
+	 '''
 	 @param: a: company name
 	 returns: the official name of the company as listed on the stock market
 	 '''
-    searchval = 'yahoo finance '+a
-    link = []
-    #limits to the first link
-    for url in gsearch(searchval, tld='es', lang='es', stop=1):
-        link.append(url)
+	 searchval = 'yahoo finance '+a
+	 link = []
+	 #limits to the first link
+	 for url in gsearch(searchval, tld='es', lang='es', stop=1):
+		  link.append(url)
 
-    link = str(link[0])
-    link=link.split("/")
+	 link = str(link[0])
+	 link=link.split("/")
 
-    if link[-1]=='':
-        ticker=link[-2]
-    else:
-        x=link[-1].split('=')
-        ticker=x[-1]
-    try:
-    	long_name = yf.Ticker(ticker).info['longName']
-    except:
-    	return '', ''
-    return ticker, long_name
+	 if link[-1]=='':
+		  ticker=link[-2]
+	 else:
+		  x=link[-1].split('=')
+		  ticker=x[-1]
+	 try:
+	 	long_name = yf.Ticker(ticker).info['longName']
+	 except:
+	 	return '', ''
+	 return ticker, long_name
 
 
+'''
+MAIN app route for server side
+'''
 
 @app.route('/search/<query>', methods=['GET', 'POST'])
 def search(query):
@@ -206,18 +209,18 @@ API route
 @app.route('/api/<query>', methods=['GET'])
 def api(query):
 	if not query in symbols:
-	    symbol, full_name = name_convert(query)
-	    company_name = full_name
-	    if not full_name:
-	    	full_name = query
-	    symbols[full_name] = symbol
+		 symbol, full_name = name_convert(query)
+		 company_name = full_name
+		 if not full_name:
+		 	full_name = query
+		 symbols[full_name] = symbol
 	symbol = symbols[full_name]
 	if not symbol in companyinfo:
-	   ticker = yf.Ticker(symbol)
-	   companyinfo[symbol] = (
-	    ticker.info['currentPrice'] if 'currentPrice' in ticker.info else -1,
-	    ticker.info['logo_url']
-	    )
+		ticker = yf.Ticker(symbol)
+		companyinfo[symbol] = (
+		 ticker.info['currentPrice'] if 'currentPrice' in ticker.info else -1,
+		 ticker.info['logo_url']
+		 )
 	currprice, logo_url = companyinfo[symbol]
 	if not full_name in cache:
 		cache[full_name] = scrape_data(full_name)
@@ -235,11 +238,11 @@ def api(query):
 		except:
 			pricedict[symbol] = []
 	return {
-		'data':cache[full_name], 
-		'sentiment':mean_sentiment, 
-		'symbol':symbol, 
-		'price':currprice, 
-		'logo_url':logo_url, 
+		'data':cache[full_name],
+		'sentiment':mean_sentiment,
+		'symbol':symbol,
+		'price':currprice,
+		'logo_url':logo_url,
 		'prediction':prediction,
 		'pricematrix':pricedict[symbol],
 		'company_name':company_name
