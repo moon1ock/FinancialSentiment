@@ -6,9 +6,6 @@
 <img src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" type="video/mp4" width="1024"/>
   
 
-![demo]<img src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" width="1024">
-
-
 ## Tutorial
 
 - Use this application to gauge the latest relevant news articles about any company of your interest.
