@@ -3,8 +3,9 @@
   <a>Financial Sentiment Based on News</a>
 </h1>
 
-<img src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" controls width="1024"/>
-
+<video controls loop>
+  <video src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" width="1024"/>
+</video>
 
 ## Tutorial
 
