@@ -9,7 +9,7 @@
 ## Tutorial
 
 - Use this application to gauge the latest relevant news articles about any company of your interest.
-- You may search by the **listed company name** (e.g.`Alphabet Inc.`), **common name** (e.g. `Google`), or _even_ have a typo in the query (e.g. `Gogle`).
+- You may search by the **listed company name** (e.g.`Alphabet Inc.`), **common name** (e.g. `Google`), ticker (e.g. `GOOGL`), or _even_ have a typo in the query (e.g. `Gogle`).
     - we use special APIs to map your request to the traded ticker and make sure to retrieve the latest and the most relevant _stock_ _and_ news data.   
 __
 
