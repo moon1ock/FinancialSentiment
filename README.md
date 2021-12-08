@@ -4,7 +4,7 @@
 </h1>
 
 
-
+![demo](https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true)
 
 
 
