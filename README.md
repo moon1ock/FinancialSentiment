@@ -3,11 +3,15 @@
   <a>Financial Sentiment Based on News</a>
 </h1>
 
-## ToD0:
 
-- [ ] get gifs from the website
-- [ ] describe core features
-- [ ] `bash` script for running both servers simulataneously 
+
+
+
+
+
+
+
+
 
 
 
@@ -30,7 +34,7 @@
         |   └──src                 <- Code for Flask Backend
         |     |
         |     ├── templates        <- HTML templates used for testing
-        |     ├── main_Google.py   <- Script for Backend
+        |     ├── main.py   <- Script for Backend
         |     └── requirements.txt <- Required Packages to Run Backend
         │
         └──finsenti_frontend     
