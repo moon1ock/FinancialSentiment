@@ -7,7 +7,7 @@
 
 
 
-  <source src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" type="video/mp4" width="1024"/>{loop=""}
+  <source src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" type="video/mp4" width="1024"/>
   
 
 
