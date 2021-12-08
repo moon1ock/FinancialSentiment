@@ -49,6 +49,10 @@ class QueryForm(Form):
 #### WEB SCRAPER OBJECT ####
 
 class WebScraper(object):
+	'''
+	WebScraper class
+	use multithreading to drop the scraping time from ~10 minutes to ~8 seconds
+	'''
 	def __init__(self, urls):
 		self.urls = urls
 		self.all_data  = []
@@ -85,7 +89,7 @@ class WebScraper(object):
 	async def main(self):
 		tasks = []
 		headers = {
-			"user-agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
+			"user-agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"} # use header for better responses
 
 		async with aiohttp.ClientSession(headers=headers) as session:
 			for url in self.urls:
@@ -110,14 +114,15 @@ def scrape_data(query):
 		return redirect(url_for('search', query = q))
 
 	q = query
-
+	# google rss for retrieving the news data
 	url = "https://news.google.com/rss/search?q=intitle:{}%20stock+after:2021-11-01&ceid=US:en&hl=en-US&gl=US".format(q)
 
+	# scrape the rss
 	resp = requests.get(url)
 
 	soup = BeautifulSoup(resp.content, features="xml")
 	items = soup.findAll('item')
-
+	# get news links
 	links_and_times = {link.link.text: link.pubDate.text for link in items }
 
 	urls = [link.link.text for link in items ]
@@ -133,7 +138,10 @@ def scrape_data(query):
 
 
 def name_convert(a):
-
+    '''
+	 @param: a: company name
+	 returns: the official name of the company as listed on the stock market
+	 '''
     searchval = 'yahoo finance '+a
     link = []
     #limits to the first link
@@ -190,6 +198,11 @@ def search(query):
 	cache[q] = article_data
 	return render_template("main_Google.html", article_data=cache[q])
 
+
+'''
+API route
+:returns: the JSON file for front end
+'''
 @app.route('/api/<query>', methods=['GET'])
 def api(query):
 	if not query in symbols:
@@ -232,6 +245,7 @@ def api(query):
 		'company_name':company_name
 	}
 
+#Landing page for testing
 @app.route('/', methods=['GET', 'POST'])
 def home():
 	form = QueryForm(request.form)
@@ -244,7 +258,7 @@ def home():
 
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=5000, debug=True) # anyone can connect, and we're running on port 5000
+	app.run(host='0.0.0.0', port=5000, debug=False) # anyone can connect, and we're running on port 5000
 
 
 
