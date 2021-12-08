@@ -46,7 +46,7 @@ class QueryForm(Form):
 
 
 #### WEB SCRAPER OBJECT ####
-`
+
 class WebScraper(object):
 	'''
 	WebScraper class
@@ -54,7 +54,7 @@ class WebScraper(object):
 	'''
 	def __init__(self, urls):
 		self.urls = urls
-		self.all_data ` = []
+		self.all_data  = []
 		self.master_dict = {}
 		asyncio.run(self.main())
 
