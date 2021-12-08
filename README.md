@@ -3,11 +3,7 @@
   <a>Financial Sentiment Based on News</a>
 </h1>
 
-
-
-
-
-  <source src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" type="video/mp4" width="1024"/>
+<source src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" type="video/mp4" width="1024"/>
   
 
 
