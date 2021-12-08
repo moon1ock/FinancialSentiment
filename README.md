@@ -6,10 +6,12 @@
 <img src="https://github.com/moon1ock/FinancialSentiment/blob/main/readme_support/demo.gif?raw=true" width="1024"/>
 
 
+## Tutorial
 
-
-
-
+- Use this application to gauge the latest relevant news articles about any company of your interest.
+- You may search by the **listed company name** (e.g.`Alphabet Inc.`), **common name** (e.g. `Google`), or _even_ have a typo in the query (e.g. `Gogle`).
+    - we use special APIs to map your request to the traded ticker and make sure to retrieve the latest and the most relevant _stock_ _and_ news data.   
+__
 
 <h2>
   Project Organization
