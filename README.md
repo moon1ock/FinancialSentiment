@@ -11,11 +11,31 @@
 - Use this application to gauge the latest relevant news articles about any company of your interest.
 - You may search by the **listed company name** (e.g.`Alphabet Inc.`), **common name** (e.g. `Google`), ticker (e.g. `GOOGL`), or _even_ have a typo in the query (e.g. `Gogle`).
     - we use special APIs to map your request to the traded ticker and make sure to retrieve the latest and the most relevant _stock_ _and_ news data.   
-__
+    - the way you spell the company **will not** affect your search results.
+- You can also send requests directly to our API ([refer to the backend](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_backend/README.md)) and parse the JSON file with the news, stock data, and sentiment yourself.
+- We get data from 1800+ reputable news sources and organize them with regard to importance and relevancy so that you don't have to!
 
-<h2>
-  Project Organization
-</h2>
+## Components
+
+### API
+
+There is a separate server that acts as an API. The server is built with Flask. For more efficient responses multi-threading and cache are used.
+[Refer to the Backend README](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_backend/README.md)
+
+### React
+
+User interface is built with React and Tailwind with an elegant and minimalist design delivering a clear and pleasant experience to the user.
+[Refer to the Frontend README](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_frontend/README.md)
+
+
+## Usage
+
+1. Follow the instructions for staring the [API](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_backend/README.md)
+2. Follow the instructions for staring the [FrontEnd](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_frontend/README.md)
+3. You may access the server at `localhost:5000`.
+
+## Project Organization
+
 
 ------------
 
@@ -52,14 +72,4 @@ __
 
 --------
 
-<h2>
-  Using The Backend
-</h2>
 
-[Refer to the Backend README](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_backend/README.md)
-
-<h2>
-  Using The Frontend
-</h2>
-
-[Refer to the Frontend README](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_frontend/README.md)
