@@ -22,7 +22,7 @@
 There is a separate server that acts as an API. The server is built with Flask. For more efficient responses multi-threading and cache are used.
 [Refer to the Backend README](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_backend/README.md)
 
-### React
+### UI
 
 User interface is built with React and Tailwind with an elegant and minimalist design delivering a clear and pleasant experience to the user.
 [Refer to the Frontend README](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_frontend/README.md)
@@ -32,7 +32,7 @@ User interface is built with React and Tailwind with an elegant and minimalist d
 
 1. Follow the instructions for staring the [API](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_backend/README.md)
 2. Follow the instructions for staring the [FrontEnd](https://github.com/moon1ock/FinancialSentiment/blob/main/project/finsenti_frontend/README.md)
-3. You may access the server at `localhost:5000`.
+3. You may access the server at `localhost:3000`.
 
 ## Project Organization
 
